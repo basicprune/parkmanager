@@ -1,18 +1,20 @@
 <?php
 
-use Html\button;
-use Html\Form\InputField\Image;
+
 use Html\Form\Select as Select;
 
 function BookingEdit_GET(Web $w) {
     $w->setLayout('layout-bootstrap-5');
     
+    
     $p = $w->pathMatch("id");
     if (!empty($p['id'])){
         $Booking = ParkManagerService::getInstance($w)->GetBookingForId($p['id']);
+        $Contact = ParkManagerService::getInstance($w)->getContactDetails($Booking->contact_id);
         $Site = ParkManagerService::getInstance($w)->GetSiteByName($Booking->site);
     }else {
         $Booking = new ParkManagerBookings($w);
+        $Contact = new Contact($w);
         $Site = new Site($w);
     }
     
@@ -25,12 +27,12 @@ function BookingEdit_GET(Web $w) {
     $form = [
         "Booking Details" => [
             [
-                ["First Name", "text", "firstname", $Booking->firstname],
-                ["Last Name", "text", "lastname", $Booking->lastname]
+                ["First Name", "text", "firstname", $Contact->firstname],
+                ["Last Name", "text", "lastname", $Contact->lastname]
             ],
             [
-                ["Mobile", "text", "mobile", $Booking->phonenumber],
-                ["Email", "text", "email", $Booking->email]
+                ["Mobile", "text", "mobile", $Contact->mobile],
+                ["Email", "text", "email", $Contact->email]
             ],
             [
                 // ["Start Of Stay", "date", "dt_startofstaydate"],
@@ -77,9 +79,11 @@ function BookingEdit_POST(Web $w) {
 
     if (!empty($p['id'])){
         $Booking = ParkManagerService::getInstance($w)->GetBookingForId($p['id']);
+        $Contact = ParkManagerService::getInstance($w)->getContactDetails($Booking->contact_id);
         $Site = ParkManagerService::getInstance($w)->GetSiteByName($Booking->site);
     }else {
         $Booking = new ParkManagerBookings($w);
+        $Contact = new Contact($w);
     }   
 
     $startofstaydate = DateTime::createFromFormat("Y-m-d", $_POST['dt_startofstaydate'], new DateTimeZone($_SESSION['usertimezone']));
@@ -107,11 +111,14 @@ function BookingEdit_POST(Web $w) {
         $Booking->room = $_POST['room'];
     }
 
-    $Booking->firstname = $_POST['firstname'];
-    $Booking->lastname = $_POST['lastname'];
-    $Booking->phonenumber = $_POST['mobile'];
-    $Booking->email = $_POST['email'];
-    
+    $Contact->firstname = $_POST['firstname'];
+    $Contact->lastname = $_POST['lastname'];
+    $Contact->mobile = $_POST['mobile'];
+    $Contact->email = $_POST['email'];
+    $Contact->insertOrUpdate();
+    $Booking->contact_id = $Contact->id;
+
+
     $Booking->dt_bookingtime = $bookingtime;
     $Booking->dt_startofstaydate = $startofstaydate;
     $Booking->dt_endofstaydate = $endofstaydate;

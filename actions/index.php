@@ -15,13 +15,20 @@ function index_ALL(Web $w) {
 
    
     $Bookings = ParkManagerService::getInstance($w)->GetAllBookings();
+    
 
     $table = [];
-    $tableHeaders = ['FullName', 'Site/Room', 'Mobile', 'Email', 'Start Of Stay - End Of Stay', 'Length Of Stay', 'Cost', 'Actions'];
+    $tableHeaders = ['Fullname', 'Site/Room', 'Mobile', 'Email', 'Start Of Stay - End Of Stay', 'Length Of Stay', 'Cost', 'Actions'];
     if (!empty($Bookings)) {
         foreach ($Bookings as $Booking) {
+            // var_dump($Booking); die;
+            // var_dump($Booking->contact_id); 
+
+
+            $Contact = ParkManagerService::getInstance($w)->getContactDetails($Booking->contact_id);
+            
             $row = [];
-            $row[] = $Booking->firstname . " " . $Booking->lastname;
+            $row[] = $Contact->firstname . " " . $Contact->lastname;
 
             if ($Booking->site != "")
             {
@@ -32,8 +39,8 @@ function index_ALL(Web $w) {
                 $row[] = $Booking->site;
             }
 
-            $row[] = $Booking->phonenumber;
-            $row[] = $Booking->email;
+            $row[] = $Contact->mobile;
+            $row[] = $Contact->email;
             $row[] = formatDate($Booking->dt_startofstaydate, "d/m/Y", $_SESSION['usertimezone']) . ' - ' .formatDate($Booking->dt_endofstaydate, "d/m/Y", $_SESSION['usertimezone']);
             
             $Difference = $Booking->dt_startofstaydate->diff($Booking->dt_endofstaydate);

@@ -60,4 +60,20 @@ public function getSiteTypes($sites)
     }
 
 
+    public function getContactDetails($contact_id){
+        return AuthService::getInstance($this->w)->getContact($contact_id);
+    }
+
+   
+
+
+
+
+
+
+
+
+
+
 }
+
