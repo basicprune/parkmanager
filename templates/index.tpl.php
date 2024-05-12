@@ -1,4 +1,4 @@
-<?php echo Html::box("/parkmanager/BookingEdit", "Add New Booking", true); ?>
+<?php echo Html::b("/parkmanager/MultipleBookingEdit", "Add New Booking"); ?>
 <?php 
 $array = [1,2,3,4,5,6,7,8,9,10];
 

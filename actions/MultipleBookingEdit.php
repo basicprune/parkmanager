@@ -3,14 +3,10 @@
 
 
 function MultipleBookingEdit_GET(Web $w) {
-
-
-
     $w->setLayout('layout-bootstrap-5');
 
   
-        $Booking = new ParkManagerBookings($w);
-        
+    $Booking = new ParkManagerBookings($w);    
 
     $form = [
 
@@ -39,7 +35,7 @@ function MultipleBookingEdit_GET(Web $w) {
 
 function MultipleBookingEdit_POST(Web $w) {
     
-
+// var_dump($_POST['site']); die;
 
 $Booking = new ParkManagerBookings($w);
 
@@ -76,7 +72,7 @@ function CheckForGuests($GuestNum){
     }
 }
 
-$Booking->site = "37D";
+$Booking->site = $_POST['site'];
 
 $Booking->dt_bookingtime = $bookingtime;
 $Booking->dt_startofstaydate = $startofstaydate;
@@ -84,8 +80,8 @@ $Booking->dt_endofstaydate = $endofstaydate;
 
 $Difference = $startofstaydate->diff($endofstaydate);
 
-$Booking->rate = 500;
-$Booking->totalcost = 500 * $Difference->days;
+$Booking->rate = $_POST['rate'];
+$Booking->totalcost = $_POST['rate'] * $Difference->days;
 $Booking->remainingcost = $Booking->totalcost;
 $Booking->numofguests = CheckForGuests(0);
 $Booking->InsertOrUpdate();
