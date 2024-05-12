@@ -1,7 +1,7 @@
 <?php
 class ParkManagerBookings extends DbObject {
 
-public $contact_id;
+public $numofguests;
 public $dt_bookingtime;
 public $dt_startofstaydate;
 public $dt_endofstaydate;

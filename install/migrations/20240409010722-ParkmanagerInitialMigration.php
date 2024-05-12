@@ -15,7 +15,7 @@ class ParkmanagerInitialMigration extends CmfiveMigration
                 "id" => false,
                 "primary_key" => "id"
             ])->addColumn($column)
-                ->addIdColumn('contact_id')
+				->addColumn('numofguests', 'biginteger')
                 ->addDateTimeColumn('dt_bookingtime')
                 ->addDateTimeColumn('dt_startofstaydate')
                 ->addDateTimeColumn('dt_endofstaydate')
@@ -41,12 +41,24 @@ class ParkmanagerInitialMigration extends CmfiveMigration
                 ->addCmfiveParameters()
                 ->create();
         }
+
+        if (!$this->hasTable("park_guest")) {
+            $this->table("park_guest", [
+                "id" => false,
+                "primary_key" => "id"
+            ])->addColumn($column)
+                ->addIdColumn('contact_id') //dt_DayTrack
+                ->addIdColumn('booking_id') 
+                ->addCmfiveParameters()
+                ->create();
+        }
     }
 
     public function down()
     {
         $this->hasTable('park_manager_bookings') ? $this->dropTable('park_manager_bookings') : null;
         $this->hasTable('site') ? $this->dropTable('site') : null;
+        $this->hasTable('park_guest') ? $this->dropTable('park_guest') : null;
         // DOWN
     }
 
