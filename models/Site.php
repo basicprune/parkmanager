@@ -1,7 +1,7 @@
 <?php
 class Site extends DbObject {
 
-public $site_id;
+public $booking_id;
 public $sitename;
 public $has_electricity;
 public $is_booked;

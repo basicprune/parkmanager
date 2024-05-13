@@ -38,7 +38,7 @@ function MultipleBookingEdit_POST(Web $w) {
 // var_dump($_POST['site']); die;
 
 $SiteCheck = ParkManagerService::getInstance($w)->GetSiteByName($_POST['site']);
-$BookingCheck = ParkManagerService::getInstance($w)->GetBookingForSite($SiteCheck->sitename);
+$BookingCheck = ParkManagerService::getInstance($w)->GetBookingForId($SiteCheck->booking_id);
 
 if($SiteCheck->is_booked){
     $w->msg("Site is booked untill (" . formatDate($BookingCheck->dt_endofstaydate, "m/d/Y", $_SESSION['usertimezone']) . ")", "/parkmanager/index");
@@ -82,7 +82,7 @@ function CheckForGuests($GuestNum){
     }
 }
 
-$Booking->site = $_POST['site'];
+// $Booking = $_POST['site'];
 
 $Booking->dt_bookingtime = $bookingtime;
 $Booking->dt_startofstaydate = $startofstaydate;
@@ -96,7 +96,8 @@ $Booking->remainingcost = $Booking->totalcost;
 $Booking->numofguests = CheckForGuests(0);
 $Booking->InsertOrUpdate();
 
-$Site = ParkManagerService::getInstance($w)->GetSiteByName($Booking->site);
+$Site = ParkManagerService::getInstance($w)->GetSiteByName($_POST['site']);
+$Site->booking_id = $Booking->id;
 $Site->is_booked = true;
 $Site->InsertOrUpdate();
 

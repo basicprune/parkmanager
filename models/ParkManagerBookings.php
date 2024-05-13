@@ -8,8 +8,6 @@ public $dt_endofstaydate;
 public $totalcost;
 public $rate;
 public $remainingcost;
-public $site;
-public $room;
 
 
 public function getBookingStartDate($format = "Y-m-d"){

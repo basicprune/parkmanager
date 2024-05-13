@@ -22,8 +22,6 @@ class ParkmanagerInitialMigration extends CmfiveMigration
                 ->addMoneyColumn('totalcost')
                 ->addMoneyColumn('rate')
                 ->addMoneyColumn('remainingcost')
-                ->addStringColumn('site')
-                ->addStringColumn('room')
                 ->addCmfiveParameters()
                 ->create();
         }
@@ -33,7 +31,7 @@ class ParkmanagerInitialMigration extends CmfiveMigration
                 "id" => false,
                 "primary_key" => "id"
             ])->addColumn($column)
-                ->addIdColumn('site_id') //dt_DayTrack
+                ->addIdColumn('booking_id') //dt_DayTrack
                 ->addStringColumn('sitename')
                 ->addBooleanColumn('has_electricity')
                 ->addBooleanColumn('is_booked')
