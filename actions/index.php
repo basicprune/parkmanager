@@ -21,7 +21,7 @@ function index_ALL(Web $w) {
     //-------------------- table of bookings ------------------//
 
     $table = [];
-    $tableHeaders = ['Number Of Guests', 'Site/Room', 'Start Of Stay - End Of Stay', 'Length Of Stay', 'Cost', 'Actions'];
+    $tableHeaders = ['Number Of Guests', 'Start Of Stay - End Of Stay', 'Length Of Stay', 'Cost', 'Actions'];
     if (!empty($Bookings)) {
         foreach ($Bookings as $Booking) {
 
@@ -31,7 +31,7 @@ function index_ALL(Web $w) {
             
 
             $row[] = $Booking->numofguests;
-            $row[] = $Booking->site;
+            // $row[] = $Booking->site;
             
 
            

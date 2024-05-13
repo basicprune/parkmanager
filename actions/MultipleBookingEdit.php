@@ -37,6 +37,16 @@ function MultipleBookingEdit_POST(Web $w) {
     
 // var_dump($_POST['site']); die;
 
+$SiteCheck = ParkManagerService::getInstance($w)->GetSiteByName($_POST['site']);
+$BookingCheck = ParkManagerService::getInstance($w)->GetBookingForSite($SiteCheck->sitename);
+
+if($SiteCheck->is_booked){
+    $w->msg("Site is booked untill (" . formatDate($BookingCheck->dt_endofstaydate, "m/d/Y", $_SESSION['usertimezone']) . ")", "/parkmanager/index");
+}else if($SiteCheck->is_closed){
+    $w->msg("Site is under maintenence", "/parkmanager/index");
+}
+
+
 $Booking = new ParkManagerBookings($w);
 
 
@@ -86,6 +96,9 @@ $Booking->remainingcost = $Booking->totalcost;
 $Booking->numofguests = CheckForGuests(0);
 $Booking->InsertOrUpdate();
 
+$Site = ParkManagerService::getInstance($w)->GetSiteByName($Booking->site);
+$Site->is_booked = true;
+$Site->InsertOrUpdate();
 
 for ($NumOfGuests = 0; $NumOfGuests < CheckForGuests(0); $NumOfGuests++){
     if (!empty($_POST["firstname" . $NumOfGuests]) && !empty($_POST["lastname" . $NumOfGuests]) && !empty($_POST["mobile" . $NumOfGuests]) && !empty($_POST["email" . $NumOfGuests]))
@@ -102,15 +115,14 @@ for ($NumOfGuests = 0; $NumOfGuests < CheckForGuests(0); $NumOfGuests++){
 
         $Guest->contact_id = $Contact->id;
         $Guest->booking_id = $Booking->id;
+        $Guest->site_id = $Site->id;
         $Guest->insertOrUpdate();
     }
 }
 
 
 
-$Site = ParkManagerService::getInstance($w)->GetSiteByName($Booking->site);
-$Site->is_booked = true;
-$Site->InsertOrUpdate();
+
 
     $msg = "New Booking Saved";
     

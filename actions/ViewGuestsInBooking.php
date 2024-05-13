@@ -7,7 +7,7 @@ function ViewGuestsInBooking_ALL(Web $w){
 
 
     $table = [];
-    $tableHeaders = ['Fullname', 'Mobile', 'Email', 'Actions'];
+    $tableHeaders = ['Fullname', 'Mobile', 'Email', 'Site','Actions'];
    
         foreach ($guests as $guest) {
 
@@ -16,12 +16,12 @@ function ViewGuestsInBooking_ALL(Web $w){
             
             $row = [];
             
-
+            $Site = ParkManagerService::getInstance($w)->GetSiteForId($guest->site_id);
             
             $row[] = $contact->firstname . " " . $contact->lastname;
             $row[] = $contact->mobile;
             $row[] = $contact->email;
-            
+            $row[] = $Site->sitename;
 
            
             

@@ -48,7 +48,10 @@ class ParkmanagerInitialMigration extends CmfiveMigration
                 "primary_key" => "id"
             ])->addColumn($column)
                 ->addIdColumn('contact_id') //dt_DayTrack
-                ->addIdColumn('booking_id') 
+                ->addIdColumn('booking_id')
+                ->addIdColumn('site_id')
+                // ->addMoneyColumn('balance')
+                // ->addMoneyColumn('totalcost')
                 ->addCmfiveParameters()
                 ->create();
         }
