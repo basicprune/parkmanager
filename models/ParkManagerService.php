@@ -12,6 +12,10 @@ public function GetGuestsByBookingId($Booking_id){
     return $this->GetObjects('ParkGuest',['booking_id'=>$Booking_id]);
 }
 
+public function GetGuestBySiteId($Site_id){
+    return $this->GetObject('ParkGuest',['site_id'=>$Site_id]);
+}
+
 
 public function GetAllSites(){
     return $this->GetObjects('Site',['is_deleted'=>0]);
@@ -39,6 +43,7 @@ public function GetBookingForId($id){
     return $this->GetObject('ParkManagerBookings', $id);
 }
 
+// public function GetBookingForId
 
 public function getSiteTypes($sites)
     {
@@ -55,14 +60,29 @@ public function getSiteTypes($sites)
             if ($site->is_closed == true){
                 $sitenames[] = $site->sitename . " (Under Maintenence)";
             }else if($site->is_booked == true){
-                $bookings = $this->GetBookingForSite($site->sitename);
+                
+                $guest = $this->GetGuestBySiteId($site->id);
+                $booking = $this->GetBookingForId($guest->booking_id);
 
-                $sitenames[] = $site->sitename .  " (Is Booked Untill " .$bookings->dt_endofstaydate->format("d/m/Y") . ")";
+                if ($site->has_electricity){
+                    $sitenames[] = $site->sitename .  " (Is Booked Untill " .$booking->dt_endofstaydate->format("d/m/Y") . ")" . " (Powered Site)";
+                }else {
+                    $sitenames[] = $site->sitename .  " (Is Booked Untill " .$booking->dt_endofstaydate->format("d/m/Y") . ")" . " (Unpowered Site)";
+                }
+                
+
             }else {
-                $sitenames[] =  $site->sitename . " (Is Avaliable)";
+                if ($site->has_electricity){
+                    $sitenames[] =  $site->sitename . " (Is Avaliable)" . " (Powered Site)";
+                }else {
+                    $sitenames[] =  $site->sitename . " (Is Avaliable)" . " (Unpowered Site)";
+                }
+               
             }
             
         }
+
+        
         
         return $sitenames;
     }

@@ -26,6 +26,7 @@
     <li>
         <label class="small-12 columns">Rate <small>Required</small><input name="rate" required="" type="text" class="small-12 columns" id="rate" style="width: 100%;"></label>
     </li>
+    
     <li>
         <label class="small-12 columns">Site<select name="sites" id="site-select" class="small-12 columns" >
   <option value="">--Please choose an option--</option></select></label>
