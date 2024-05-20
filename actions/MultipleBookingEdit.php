@@ -37,8 +37,22 @@ function MultipleBookingEdit_POST(Web $w) {
     
 // var_dump($_POST['site']); die;
 
+
+function CheckForGuests($GuestNum){
+    if (!empty($_POST["firstname" . $GuestNum])){
+        $GuestNum++;
+        return CheckForGuests($GuestNum);
+    }else {
+        return $GuestNum;
+    }
+}
+
+
 $SiteCheck = ParkManagerService::getInstance($w)->GetSiteByName($_POST['site']);
 $BookingCheck = ParkManagerService::getInstance($w)->GetBookingForId($SiteCheck->booking_id);
+
+$Booking = new ParkManagerBookings($w);
+
 
 if($SiteCheck->is_booked){
     $w->msg("Site is booked untill (" . formatDate($BookingCheck->dt_endofstaydate, "m/d/Y", $_SESSION['usertimezone']) . ")", "/parkmanager/index");
@@ -47,7 +61,6 @@ if($SiteCheck->is_booked){
 }
 
 
-$Booking = new ParkManagerBookings($w);
 
 
 
@@ -73,14 +86,6 @@ $bookingtime = new DateTime("now", new DateTimeZone($_SESSION['usertimezone']));
 // }
 
 
-function CheckForGuests($GuestNum){
-    if (!empty($_POST["firstname" . $GuestNum])){
-        $GuestNum++;
-        return CheckForGuests($GuestNum);
-    }else {
-        return $GuestNum;
-    }
-}
 
 // $Booking = $_POST['site'];
 
@@ -90,8 +95,10 @@ $Booking->dt_endofstaydate = $endofstaydate;
 
 $Difference = $startofstaydate->diff($endofstaydate);
 
+
+
 $Booking->rate = $_POST['rate'];
-$Booking->totalcost = $_POST['rate'] * $Difference->days;
+$Booking->totalcost = $_POST['rate'] * $Difference->days * CheckForGuests(0);
 $Booking->remainingcost = $Booking->totalcost;
 $Booking->numofguests = CheckForGuests(0);
 $Booking->InsertOrUpdate();
