@@ -3,6 +3,8 @@
 use Html\Form\InputField\Text;
 
 function SiteList_ALL(Web $w){
+
+
     $w->setLayout('layout-bootstrap-5');
 
     $p = $w->pathMatch("id");
@@ -24,7 +26,8 @@ function SiteList_ALL(Web $w){
             // Display 'Latest Avaliable Date' with correct dates and correct color formatting
             if ($Site->is_booked == true)
             {
-                $NextAvaliableBooking = new DateTime(ParkManagerService::getInstance($w)->GetBookingForSite($Site->sitename)->dt_endofstaydate->modify("+1 Day")->format('m/d/Y'), new DateTimeZone($_SESSION['usertimezone']));
+                $guest = ParkManagerService::getInstance($w)->GetGuestBySiteId($Site->id);
+                $NextAvaliableBooking = new DateTime(ParkManagerService::getInstance($w)->GetBookingForId($guest->booking_id)->dt_endofstaydate->modify("+1 Day")->format('m/d/Y'), new DateTimeZone($_SESSION['usertimezone']));
 
                 $row[] = "<font color=#c4c400><b>" . $NextAvaliableBooking->format('d/m/Y') . "</b></font>"; 
             }

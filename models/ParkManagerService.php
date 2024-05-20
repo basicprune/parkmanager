@@ -35,9 +35,6 @@ public function GetAllBookings(){
     return $this->GetObjects('ParkManagerBookings',['is_deleted'=>0]);
 }
 
-public function GetBookingForSite($site){
-    return $this->getObject('ParkManagerBookings', ['site'=>$site]);
-}
 
 public function GetBookingForId($id){
     return $this->GetObject('ParkManagerBookings', $id);
