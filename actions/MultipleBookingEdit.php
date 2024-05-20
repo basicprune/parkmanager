@@ -90,10 +90,10 @@ $Booking->dt_endofstaydate = $endofstaydate;
 
 $Difference = $startofstaydate->diff($endofstaydate);
 
-$Booking->rate = $_POST['rate'];
-$Booking->totalcost = $_POST['rate'] * $Difference->days;
-$Booking->remainingcost = $Booking->totalcost;
 $Booking->numofguests = CheckForGuests(0);
+$Booking->rate = $_POST['rate'];
+$Booking->totalcost = $_POST['rate'] * $Difference->days * $Booking->numofguests;
+$Booking->remainingcost = $Booking->totalcost;
 $Booking->InsertOrUpdate();
 
 $Site = ParkManagerService::getInstance($w)->GetSiteByName($_POST['site']);
