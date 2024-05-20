@@ -16,6 +16,10 @@ public function GetGuestBySiteId($Site_id){
     return $this->GetObject('ParkGuest',['site_id'=>$Site_id]);
 }
 
+public function GetSettingsById($id){
+    return $this->GetObject('Settings',$id);
+}
+
 
 public function GetAllSites(){
     return $this->GetObjects('Site',['is_deleted'=>0]);

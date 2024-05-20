@@ -53,6 +53,16 @@ class ParkmanagerInitialMigration extends CmfiveMigration
                 ->addCmfiveParameters()
                 ->create();
         }
+
+        if (!$this->hasTable("settings")) {
+            $this->table("settings", [
+                "id" => false,
+                "primary_key" => "id"
+            ])->addColumn($column)
+                ->addStringColumn('mapfilepath')
+                ->addCmfiveParameters()
+                ->create();
+        }
     }
 
     public function down()
@@ -60,6 +70,7 @@ class ParkmanagerInitialMigration extends CmfiveMigration
         $this->hasTable('park_manager_bookings') ? $this->dropTable('park_manager_bookings') : null;
         $this->hasTable('site') ? $this->dropTable('site') : null;
         $this->hasTable('park_guest') ? $this->dropTable('park_guest') : null;
+        $this->hasTable('settings') ? $this->dropTable('settings') : null;
         // DOWN
     }
 
