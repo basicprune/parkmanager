@@ -5,7 +5,7 @@ class ParkManagerService extends DbService {
 
 // Site Functions //
 public function GetAllGuests(){
-    return $this->GetObjects('park_guest',['is_deleted'=>0]);
+    return $this->GetObjects('ParkGuest',['is_deleted'=>0]);
 }
 
 public function GetGuestsByBookingId($Booking_id){
