@@ -2,7 +2,7 @@
 class Settings extends DbObject {
 
 
-public $mapfilepath;
+public $mapfile_id;
 
 
 

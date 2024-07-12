@@ -2,7 +2,7 @@
 function SiteEdit_GET(Web $w){
     $w->setLayout('layout-bootstrap-5');
 
-
+   $loggedInUser = AuthService::getInstance($w)->User();
    $p = $w->pathMatch("id");
    $w->ctx("title","Add Site");
 
@@ -28,9 +28,11 @@ function SiteEdit_GET(Web $w){
    ];
 
    
+   $Settings = ParkManagerService::getInstance($w)->GetSettings();
+   $map = ParkManagerService::getInstance($w)->GetMapFile($Settings->mapfile_id);
 
    $w->out(Html::multiColForm($form, $post_url));
-   $w->out(Html::img("/uploads/57627_Dalmeny_Campground_Map_Booklet-(1)-2.png"));
+   $w->out(Html::img('/uploads/' . $map->fullpath));
 }
 function SiteEdit_POST(Web $w){
 

@@ -12,8 +12,6 @@ function index_ALL(Web $w) {
 
     $w->ctx("User_name", $userContact->getFullName());
 
-    
-
 
    
     $Bookings = ParkManagerService::getInstance($w)->GetAllBookings();
@@ -28,7 +26,6 @@ function index_ALL(Web $w) {
             $Contact = ParkManagerService::getInstance($w)->getContactDetails($Booking->contact_id);
             
             $row = [];
-            
 
             $row[] = $Booking->numofguests;
             // $row[] = $Booking->site;

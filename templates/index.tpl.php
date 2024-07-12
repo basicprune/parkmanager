@@ -17,9 +17,13 @@ $testing = null;
 
 //     echo Html::multiColForm($form, "/parkmanager/MultipleBookingEdit?Test=" . 1, "GET");
 // echo Html::box("/parkmanager/MultipleBookingEdit?Test=" . $_POST['test'], "Add New ", true); ?>
+
 <?php echo Html::box("/parkmanager/SiteEdit", "Add New Site", true); ?>
 <?php echo Html::box("/parkmanager/SiteList", "View Sites", true); ?>
+<?php echo Html::b("/parkmanager-settings/Settings", "Settings", false, true); ?>
 </br>
+
+
 <?php echo $table; ?>
 
 

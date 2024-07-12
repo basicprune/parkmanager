@@ -59,7 +59,7 @@ class ParkmanagerInitialMigration extends CmfiveMigration
                 "id" => false,
                 "primary_key" => "id"
             ])->addColumn($column)
-                ->addStringColumn('mapfilepath')
+                ->addIdColumn('mapfile_id')
                 ->addCmfiveParameters()
                 ->create();
         }

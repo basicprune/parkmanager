@@ -4,6 +4,13 @@ class ParkManagerService extends DbService {
 
 
 // Site Functions //
+public function GetMapFiles($id){
+    return $this->getObjects('attachment', ['parent_id'=>$id]);
+}
+public function GetMapFile(){
+    return $this->getObject('attachment', $this->GetSettings()->mapfile_id);
+}
+
 public function GetAllGuests(){
     return $this->GetObjects('park_guest',['is_deleted'=>0]);
 }
@@ -16,8 +23,8 @@ public function GetGuestBySiteId($Site_id){
     return $this->GetObject('ParkGuest',['site_id'=>$Site_id]);
 }
 
-public function GetSettingsById($id){
-    return $this->GetObject('Settings',$id);
+public function GetSettings(){
+    return $this->GetObject('Settings',1);
 }
 
 

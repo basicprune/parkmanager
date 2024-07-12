@@ -11,7 +11,7 @@
 
 
 </div>
-<button type="button" onmousedown="addGuestFields()" style="background-color: #008CBA; border-color: #007095;">Click Me!</button>
+<button type="button" onmousedown="addGuestFields()" class="button medium-5 small-12">Add New Clients</button>
 
 <div class="panel clearfix"><div class="row-fluid clearfix section-header"><h4>Booking Details<span style="display: none;" class="changed_status right alert radius label">changed</span></h4></div>
 <ul class="small-block-grid-1 medium-block-grid-2 section-body">
