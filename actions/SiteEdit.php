@@ -8,12 +8,12 @@ function SiteEdit_GET(Web $w){
 
    if (!empty($p['id'])) 
    {
-        $Site = ParkManagerService::getInstance($w)->GetSiteForId($p['id']);
+        $Site = ParkmanagerService::getInstance($w)->GetSiteForId($p['id']);
         $post_url = '/parkmanager/SiteEdit/' .$p['id'];
    }
    else 
    {
-        $Site = new Site($w);
+        $Site = new ParkmanagerSite($w);
         $post_url = '/parkmanager/SiteEdit';
    }
 
@@ -21,8 +21,8 @@ function SiteEdit_GET(Web $w){
        "Site Details" => [
            [
                ["Site Name", "text", "sitename", $Site->sitename],
-               ["Site Is Connected To Electricity? (Check the box if the site is)", "checkbox", "electricity", $Site->has_electricity],
-               ["Site Is Under Maintenence (Check the box if the site is)", "checkbox", "is_closed", $Site->is_closed]
+               ["Site Is Under Maintenence (Check the box if the site is)", "checkbox", "is_closed", $Site->is_closed],
+               ["Site Is Connected To Electricity? (Check the box if the site is)", "checkbox", "electricity", $Site->has_electricity]
            ]
        ]
    ];
@@ -36,9 +36,9 @@ function SiteEdit_POST(Web $w){
 
     $p = $w->pathMatch("id");
     if (!empty($p['id'])) {
-        $Site = ParkManagerService::getInstance($w)->GetSiteForId($p['id']);
+        $Site = ParkmanagerService::getInstance($w)->GetSiteForId($p['id']);
     }else {
-        $Site = new Site($w);
+        $Site = new ParkmanagerSite($w);
     }
    
     $Site->sitename = $_POST['sitename'];
@@ -48,5 +48,5 @@ function SiteEdit_POST(Web $w){
     $Site->insertOrUpdate();
         
     $msg = "New Booking Saved";
-    $w->msg($msg, "/parkmanager/index");
+    $w->msg($msg, "/parkmanager");
 }

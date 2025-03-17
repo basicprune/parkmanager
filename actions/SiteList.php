@@ -11,7 +11,7 @@ function SiteList_ALL(Web $w){
     $w->ctx("title","Sites List");
 
 
-    $Sites = ParkManagerService::getInstance($w)->GetAllSites();
+    $Sites = ParkmanagerService::getInstance($w)->GetAllSites();
 
     $table = [];
     $tableHeaders = ['Site', 'Has Electricity', 'Is Booked', 'Under Maintenance', 'Latest Avaliable Date', 'Actions'];
@@ -26,8 +26,8 @@ function SiteList_ALL(Web $w){
             // Display 'Latest Avaliable Date' with correct dates and correct color formatting
             if ($Site->is_booked == true)
             {
-                $guest = ParkManagerService::getInstance($w)->GetGuestBySiteId($Site->id);
-                $NextAvaliableBooking = new DateTime(ParkManagerService::getInstance($w)->GetBookingForId($guest->booking_id)->dt_endofstaydate->modify("+1 Day")->format('m/d/Y'), new DateTimeZone($_SESSION['usertimezone']));
+                $guest = ParkmanagerService::getInstance($w)->GetGuestBySiteId($Site->id);
+                $NextAvaliableBooking = new DateTime(ParkmanagerService::getInstance($w)->GetBookingForId($guest->booking_id)->dt_endofstaydate->modify("+1 Day")->format('m/d/Y'), new DateTimeZone($_SESSION['usertimezone']));
 
                 $row[] = "<font color=#c4c400><b>" . $NextAvaliableBooking->format('d/m/Y') . "</b></font>"; 
             }

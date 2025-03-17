@@ -2,7 +2,7 @@
 function ViewGuestsInBooking_ALL(Web $w){
     $p = $w->pathMatch("id");
 
-    $guests = ParkManagerService::getInstance($w)->GetGuestsByBookingId($p['id']);
+    $guests = ParkmanagerService::getInstance($w)->GetGuestsByBookingId($p['id']);
    
 
 
@@ -11,12 +11,12 @@ function ViewGuestsInBooking_ALL(Web $w){
    
         foreach ($guests as $guest) {
 
-            $contact = ParkManagerService::getInstance($w)->getContactDetails($guest->contact_id);
+            $contact = ParkmanagerService::getInstance($w)->getContactDetails($guest->contact_id);
 
             
             $row = [];
             
-            $Site = ParkManagerService::getInstance($w)->GetSiteForId($guest->site_id);
+            $Site = ParkmanagerService::getInstance($w)->GetSiteForId($guest->site_id);
             
             $row[] = $contact->firstname . " " . $contact->lastname;
             $row[] = $contact->mobile;

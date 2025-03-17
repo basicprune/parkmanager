@@ -1,12 +1,12 @@
 <?php
 
-
+use Html\Form\Select;
 
 function MultipleBookingEdit_GET(Web $w) {
     $w->setLayout('layout-bootstrap-5');
 
   
-    $Booking = new ParkManagerBookings($w);    
+    $Booking = new ParkmanagerBookings($w);    
 
     $form = [
 
@@ -24,6 +24,15 @@ function MultipleBookingEdit_GET(Web $w) {
                     "value"            => $Booking->getBookingEndDate(),
                     "required"        => "true"
                 ]))->setLabel("End Of Stay")
+            ],
+            [
+                ["Rate", "text", "rate", $Booking->rate],
+                (new Select([
+                    'id|name' => 'site',
+                    'selected_option' => $lookup->type,
+                    'label' => 'Site',
+                    'options' => $types,
+                ])),
             ]
         ]
     ];
@@ -37,17 +46,17 @@ function MultipleBookingEdit_POST(Web $w) {
     
 // var_dump($_POST['site']); die;
 
-$SiteCheck = ParkManagerService::getInstance($w)->GetSiteByName($_POST['site']);
-$BookingCheck = ParkManagerService::getInstance($w)->GetBookingForId($SiteCheck->booking_id);
+$SiteCheck = ParkmanagerService::getInstance($w)->GetSiteByName($_POST['site']);
+$BookingCheck = ParkmanagerService::getInstance($w)->GetBookingForId($SiteCheck->booking_id);
 
 if($SiteCheck->is_booked){
-    $w->msg("Site is booked untill (" . formatDate($BookingCheck->dt_endofstaydate, "m/d/Y", $_SESSION['usertimezone']) . ")", "/parkmanager/index");
+    $w->msg("Site is booked untill (" . formatDate($BookingCheck->dt_endofstaydate, "m/d/Y", $_SESSION['usertimezone']) . ")", "/parkmanager");
 }else if($SiteCheck->is_closed){
-    $w->msg("Site is under maintenence", "/parkmanager/index");
+    $w->msg("Site is under maintenence", "/parkmanager");
 }
 
 
-$Booking = new ParkManagerBookings($w);
+$Booking = new ParkmanagerBookings($w);
 
 
 
@@ -96,7 +105,7 @@ $Booking->totalcost = $_POST['rate'] * $Difference->days * $Booking->numofguests
 $Booking->remainingcost = $Booking->totalcost;
 $Booking->InsertOrUpdate();
 
-$Site = ParkManagerService::getInstance($w)->GetSiteByName($_POST['site']);
+$Site = ParkmanagerService::getInstance($w)->GetSiteByName($_POST['site']);
 $Site->booking_id = $Booking->id;
 $Site->is_booked = true;
 $Site->InsertOrUpdate();
@@ -105,7 +114,7 @@ for ($NumOfGuests = 0; $NumOfGuests < CheckForGuests(0); $NumOfGuests++){
     if (!empty($_POST["firstname" . $NumOfGuests]) && !empty($_POST["lastname" . $NumOfGuests]) && !empty($_POST["mobile" . $NumOfGuests]) && !empty($_POST["email" . $NumOfGuests]))
     {
         $Contact = new Contact($w);
-        $Guest = new ParkGuest($w);
+        $Guest = new ParkmanagerGuest($w);
 
         $Contact->firstname = $_POST['firstname' . $NumOfGuests];
         $Contact->lastname = $_POST['lastname' . $NumOfGuests];
@@ -128,7 +137,7 @@ for ($NumOfGuests = 0; $NumOfGuests < CheckForGuests(0); $NumOfGuests++){
     $msg = "New Booking Saved";
     
 
-    $w->msg($msg, "/parkmanager/index");
+    $w->msg($msg, "/parkmanager");
 
 }
 

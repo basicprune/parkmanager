@@ -10,8 +10,8 @@ class ParkmanagerInitialMigration extends CmfiveMigration
                 ->setType('biginteger')
                 ->setIdentity(true);
 
-        if (!$this->hasTable("park_manager_bookings")) {
-            $this->table("park_manager_bookings", [
+        if (!$this->hasTable("parkmanager_bookings")) {
+            $this->table("parkmanager_bookings", [
                 "id" => false,
                 "primary_key" => "id"
             ])->addColumn($column)
@@ -26,8 +26,8 @@ class ParkmanagerInitialMigration extends CmfiveMigration
                 ->create();
         }
 
-        if (!$this->hasTable("site")) {
-            $this->table("site", [
+        if (!$this->hasTable("parkmanager_site")) {
+            $this->table("parkmanager_site", [
                 "id" => false,
                 "primary_key" => "id"
             ])->addColumn($column)
@@ -40,8 +40,8 @@ class ParkmanagerInitialMigration extends CmfiveMigration
                 ->create();
         }
 
-        if (!$this->hasTable("park_guest")) {
-            $this->table("park_guest", [
+        if (!$this->hasTable("parkmanager_guest")) {
+            $this->table("parkmanager_guest", [
                 "id" => false,
                 "primary_key" => "id"
             ])->addColumn($column)
@@ -57,9 +57,9 @@ class ParkmanagerInitialMigration extends CmfiveMigration
 
     public function down()
     {
-        $this->hasTable('park_manager_bookings') ? $this->dropTable('park_manager_bookings') : null;
-        $this->hasTable('site') ? $this->dropTable('site') : null;
-        $this->hasTable('park_guest') ? $this->dropTable('park_guest') : null;
+        $this->hasTable('parkmanager_bookings') ? $this->dropTable('parkmanager_bookings') : null;
+        $this->hasTable('parkmanager_site') ? $this->dropTable('parkmanager_site') : null;
+        $this->hasTable('parkmanager_guest') ? $this->dropTable('parkmanager_guest') : null;
         // DOWN
     }
 

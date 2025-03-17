@@ -1,43 +1,43 @@
 <?php
-class ParkManagerService extends DbService {
+class ParkmanagerService extends DbService {
 
 
 
 // Site Functions //
 public function GetAllGuests(){
-    return $this->GetObjects('ParkGuest',['is_deleted'=>0]);
+    return $this->GetObjects('ParkmanagerGuest',['is_deleted'=>0]);
 }
 
 public function GetGuestsByBookingId($Booking_id){
-    return $this->GetObjects('ParkGuest',['booking_id'=>$Booking_id]);
+    return $this->GetObjects('ParkmanagerGuest',['booking_id'=>$Booking_id]);
 }
 
 public function GetGuestBySiteId($Site_id){
-    return $this->GetObject('ParkGuest',['site_id'=>$Site_id]);
+    return $this->GetObject('ParkmanagerGuest',['site_id'=>$Site_id]);
 }
 
 
 public function GetAllSites(){
-    return $this->GetObjects('Site',['is_deleted'=>0]);
+    return $this->GetObjects('ParkmanagerSite',['is_deleted'=>0]);
 }
 
 public function GetSiteByName($sitename){
-    return $this->GetObject('Site', ['sitename'=>$sitename]);
+    return $this->GetObject('ParkmanagerSite', ['sitename'=>$sitename]);
 }
 
 public function GetSiteForId($id){
-    return $this->GetObject('Site', $id);
+    return $this->GetObject('ParkmanagerSite', $id);
 }
 
 // ParkManagerBookings Functions //
 
 public function GetAllBookings(){
-    return $this->GetObjects('ParkManagerBookings',['is_deleted'=>0]);
+    return $this->GetObjects('ParkmanagerBookings',['is_deleted'=>0]);
 }
 
 
 public function GetBookingForId($id){
-    return $this->GetObject('ParkManagerBookings', $id);
+    return $this->GetObject('ParkmanagerBookings', $id);
 }
 
 // public function GetBookingForId
@@ -91,7 +91,29 @@ public function getSiteTypes($sites)
 
    
 
+    // public function navigation(Web $w, $title = null, $prenav = null)
+    // {
+    //     if ($title) {
+    //         $w->ctx("title", $title);
+    //     }
 
+    //     $nav = $prenav ? $prenav : [];
+
+    //     if (AuthService::getInstance($w)->loggedIn()) {
+    //         // $w->menuLink("parkmanager/index", "ParkManager Dashboard", $nav);
+    //         // $w->menuLink("parkmanager/index", "ParkManager Test Menu", $nav);
+
+    //     }
+    //     $w->ctx("navigation", $nav);
+    //     return $nav;
+    // }
+
+    public function navList(): array
+    {
+        return [
+            new MenuLinkStruct('ParkManager Dashboard', 'parkmanager/index')
+        ];
+    }
 
 
 

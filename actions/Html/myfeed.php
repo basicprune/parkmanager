@@ -11,7 +11,7 @@ function myfeed_ALL(Web $w) {
     // var_dump($classes);
 
     $Bookings_Insances = [];
-    $Bookings_Insances = ParkManagerService::getInstance($w)->GetAllBookings();
+    $Bookings_Insances = ParkmanagerService::getInstance($w)->GetAllBookings();
     
 
     $calendarEvents = [];

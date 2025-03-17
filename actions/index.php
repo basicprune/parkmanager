@@ -16,7 +16,7 @@ function index_ALL(Web $w) {
 
 
    
-    $Bookings = ParkManagerService::getInstance($w)->GetAllBookings();
+    $Bookings = ParkmanagerService::getInstance($w)->GetAllBookings();
     
     //-------------------- table of bookings ------------------//
 
@@ -25,7 +25,7 @@ function index_ALL(Web $w) {
     if (!empty($Bookings)) {
         foreach ($Bookings as $Booking) {
 
-            $Contact = ParkManagerService::getInstance($w)->getContactDetails($Booking->contact_id);
+            $Contact = ParkmanagerService::getInstance($w)->getContactDetails($Booking->contact_id);
             
             $row = [];
             

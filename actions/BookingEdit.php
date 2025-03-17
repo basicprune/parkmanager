@@ -9,11 +9,11 @@ function BookingEdit_GET(Web $w) {
     
     $p = $w->pathMatch("id");
     if (!empty($p['id'])){
-        $Booking = ParkManagerService::getInstance($w)->GetBookingForId($p['id']);
-        $Contact = ParkManagerService::getInstance($w)->getContactDetails($Booking->contact_id);
-        $Site = ParkManagerService::getInstance($w)->GetSiteByName($Booking->site);
+        $Booking = ParkmanagerService::getInstance($w)->GetBookingForId($p['id']);
+        $Contact = ParkmanagerService::getInstance($w)->getContactDetails($Booking->contact_id);
+        $Site = ParkmanagerService::getInstance($w)->GetSiteByName($Booking->site);
     }else {
-        $Booking = new ParkManagerBookings($w);
+        $Booking = new ParkmanagerBookings($w);
         $Contact = new Contact($w);
         // $Site = new Site($w);
     }
@@ -56,7 +56,7 @@ function BookingEdit_GET(Web $w) {
                     "label" => "Sites",
                     "style" => "width: 100%"
                 ]))
-                ->setOptions(ParkManagerService::getInstance($w)->getSiteTypes($sites))
+                ->setOptions(ParkmanagerService::getInstance($w)->getSiteTypes($sites))
             ]
         ]
         
@@ -78,11 +78,11 @@ function BookingEdit_POST(Web $w) {
     $p = $w->pathMatch("id");
 
     if (!empty($p['id'])){
-        $Booking = ParkManagerService::getInstance($w)->GetBookingForId($p['id']);
-        $Contact = ParkManagerService::getInstance($w)->getContactDetails($Booking->contact_id);
-        $Site = ParkManagerService::getInstance($w)->GetSiteByName($Booking->site);
+        $Booking = ParkmanagerService::getInstance($w)->GetBookingForId($p['id']);
+        $Contact = ParkmanagerService::getInstance($w)->getContactDetails($Booking->contact_id);
+        $Site = ParkmanagerService::getInstance($w)->GetSiteByName($Booking->site);
     }else {
-        $Booking = new ParkManagerBookings($w);
+        $Booking = new ParkmanagerBookings($w);
         $Contact = new Contact($w);
     }   
 
@@ -95,11 +95,11 @@ function BookingEdit_POST(Web $w) {
     {
 
         $site = substr($_POST['site'], 0, strpos($_POST['site'], "("));
-        if (ParkManagerService::getInstance($w)->GetBookingForSite($site) != null){
-            $booking_dt_endofstaydate = ParkManagerService::getInstance($w)->GetBookingForSite($site)->dt_endofstaydate;
+        if (ParkmanagerService::getInstance($w)->GetBookingForSite($site) != null){
+            $booking_dt_endofstaydate = ParkmanagerService::getInstance($w)->GetBookingForSite($site)->dt_endofstaydate;
         }
         
-        if (ParkManagerService::getInstance($w)->GetSiteByName($site)->is_booked == true){
+        if (ParkmanagerService::getInstance($w)->GetSiteByName($site)->is_booked == true){
             $w->error("Sorry This Site Is Currently Booked (It Will Next Be Avaliable On " . $booking_dt_endofstaydate->format("d/m/Y") . ")", "/parkmanager/index");
         }
 
@@ -130,7 +130,7 @@ function BookingEdit_POST(Web $w) {
     $Booking->remainingcost = $Booking->totalcost;
     $Booking->InsertOrUpdate();
     
-    $Site = ParkManagerService::getInstance($w)->GetSiteByName($Booking->site);
+    $Site = ParkmanagerService::getInstance($w)->GetSiteByName($Booking->site);
     $Site->is_booked = true;
     $Site->InsertOrUpdate();
 

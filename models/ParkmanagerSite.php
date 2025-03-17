@@ -1,5 +1,5 @@
 <?php
-class Site extends DbObject {
+class ParkmanagerSite extends DbObject {
 
 public $booking_id;
 public $sitename;

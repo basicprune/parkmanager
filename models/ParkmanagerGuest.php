@@ -1,5 +1,5 @@
 <?php
-class ParkGuest extends DbObject {
+class ParkmanagerGuest extends DbObject {
 
 
 public $contact_id;

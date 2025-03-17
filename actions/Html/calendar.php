@@ -59,7 +59,7 @@ function calendar_ALL(Web $w) {
     $calendarEvents = [];
 
     $Bookings_Insances = [];
-    $Bookings_Insances = ParkManagerService::getInstance($w)->GetAllBookings();
+    $Bookings_Insances = ParkmanagerService::getInstance($w)->GetAllBookings();
     
 
     $calendarEvents = [];

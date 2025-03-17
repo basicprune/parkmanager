@@ -1,5 +1,5 @@
 <?php
-class ParkManagerBookings extends DbObject {
+class ParkmanagerBookings extends DbObject {
 
 public $numofguests;
 public $dt_bookingtime;
